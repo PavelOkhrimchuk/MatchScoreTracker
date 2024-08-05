@@ -29,6 +29,9 @@ public class MatchScore {
     private boolean isTieBreak;
     private boolean isMatchFinished;
 
+    private int player1Ads;
+    private int player2Ads;
+
     private GamePlayer winner;
     private String status;
 
@@ -54,6 +57,14 @@ public class MatchScore {
             player1Sets++;
         } else if (player == GamePlayer.PLAYER_TWO) {
             player2Sets++;
+        }
+    }
+
+    public void increasePlayerAds(GamePlayer player) {
+        if (player == GamePlayer.PLAYER_ONE) {
+            player1Ads++;
+        } else if (player == GamePlayer.PLAYER_TWO) {
+            player2Ads++;
         }
     }
 
@@ -97,6 +108,11 @@ public class MatchScore {
     public void clearGames() {
         player1Games = 0;
         player2Games = 0;
+    }
+
+    public void clearAds() {
+        player1Ads = 0;
+        player2Ads = 0;
     }
 
 
