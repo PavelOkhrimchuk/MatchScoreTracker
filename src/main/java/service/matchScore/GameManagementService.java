@@ -32,8 +32,8 @@ public class GameManagementService {
         matchScore.increasePlayerSets(player);
         matchScore.clearGames();
         if (playerWinsMatch(player, matchScore)) {
-            matchScore.setWinner(player);
-            matchScore.setMatchFinished(true);
+            setWinner(player, matchScore);
+            setMatchFinished(matchScore);
         }
     }
 
@@ -53,15 +53,27 @@ public class GameManagementService {
         return (player == GamePlayer.PLAYER_ONE) ? GamePlayer.PLAYER_TWO : GamePlayer.PLAYER_ONE;
     }
 
-    public boolean playerGamesLessThan5(GamePlayer player, MatchScore matchScore) {
-        return matchScore.getPlayerGames(player) < 5;
+    private boolean playerGamesLessThan5(GamePlayer player, MatchScore matchScore) {
+        return getPlayerGames(player, matchScore) < 5;
     }
 
-    public boolean playerGamesEqualsTo5(GamePlayer player, MatchScore matchScore) {
-        return matchScore.getPlayerGames(player) == 5;
+    private boolean playerGamesEqualsTo5(GamePlayer player, MatchScore matchScore) {
+        return getPlayerGames(player, matchScore) == 5;
     }
 
-    public boolean playerGamesEqualsTo6(GamePlayer player, MatchScore matchScore) {
-        return matchScore.getPlayerGames(player) == 6;
+    private boolean playerGamesEqualsTo6(GamePlayer player, MatchScore matchScore) {
+        return getPlayerGames(player, matchScore) == 6;
+    }
+
+    private void setWinner(GamePlayer player, MatchScore matchScore) {
+        matchScore.setWinner(player);
+    }
+
+    private void setMatchFinished(MatchScore matchScore) {
+        matchScore.setMatchFinished(true);
+    }
+
+    private int getPlayerGames(GamePlayer player, MatchScore matchScore) {
+        return player == GamePlayer.PLAYER_ONE ? matchScore.getPlayer1Games() : matchScore.getPlayer2Games();
     }
 }
