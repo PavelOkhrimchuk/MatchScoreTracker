@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 public class MatchScore {
 
-    private UUID matchId;
+
     private String player1Name;
     private String player2Name;
 
