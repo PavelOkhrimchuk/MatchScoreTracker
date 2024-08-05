@@ -68,6 +68,14 @@ public class MatchScore {
         }
     }
 
+    public void increasePlayerTieBreakPoints(GamePlayer player) {
+        if (player == GamePlayer.PLAYER_ONE) {
+            player1TieBreakPoints++;
+        } else if (player == GamePlayer.PLAYER_TWO) {
+            player2TieBreakPoints++;
+        }
+    }
+
     public int getPlayerPoints(GamePlayer player) {
         if (player == GamePlayer.PLAYER_ONE) {
             return player1Score;
