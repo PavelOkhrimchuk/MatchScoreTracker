@@ -95,6 +95,24 @@ public class MatchScore {
         return 0;
     }
 
+    public int getPlayerTieBreakPoints(GamePlayer player) {
+        if (player == GamePlayer.PLAYER_ONE) {
+            return player1TieBreakPoints;
+        } else if (player == GamePlayer.PLAYER_TWO) {
+            return player2TieBreakPoints;
+        }
+        return 0;
+    }
+
+    public int getPlayerAds(GamePlayer player) {
+        if (player == GamePlayer.PLAYER_ONE) {
+            return player1Ads;
+        } else if (player == GamePlayer.PLAYER_TWO) {
+            return player2Ads;
+        }
+        return 0;
+    }
+
     public void clearPoints() {
         player1Score = 0;
         player2Score = 0;
