@@ -1,0 +1,116 @@
+package service;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import service.matchScore.GameManagementService;
+import service.matchScore.MatchScoreCalculationService;
+import service.matchScore.PointCalculationService;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class MatchScoreTest {
+
+    private GameManagementService gameManagementService;
+    private PointCalculationService pointCalculationService;
+    private MatchScore matchScore;
+    private MatchScoreCalculationService matchScoreCalculationService;
+
+    @BeforeEach
+    void setUp() {
+        gameManagementService = new GameManagementService();
+        pointCalculationService = new PointCalculationService(gameManagementService);
+        matchScore = new MatchScore();
+        matchScoreCalculationService = new MatchScoreCalculationService(pointCalculationService, gameManagementService);
+    }
+
+
+    @Test
+    void testInitialValues() {
+        assertEquals(0, matchScore.getPlayer1Games());
+        assertEquals(0, matchScore.getPlayer2Games());
+        assertEquals(0, matchScore.getPlayer1Sets());
+        assertEquals(0, matchScore.getPlayer2Sets());
+        assertEquals(0, matchScore.getPlayer1TieBreakPoints());
+        assertEquals(0, matchScore.getPlayer2TieBreakPoints());
+        assertFalse(matchScore.isTieBreak());
+        assertFalse(matchScore.isMatchFinished());
+    }
+
+    @Test
+    void testIncreasePlayerPointsInRegularMode() {
+        pointCalculationService.calculatePlayerPointsInRegularMode(GamePlayer.PLAYER_ONE, matchScore);
+        assertEquals(15, matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE));
+        pointCalculationService.calculatePlayerPointsInRegularMode(GamePlayer.PLAYER_ONE, matchScore);
+        assertEquals(30, matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE));
+        pointCalculationService.calculatePlayerPointsInRegularMode(GamePlayer.PLAYER_ONE, matchScore);
+        assertEquals(40, matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE));
+    }
+
+    @Test
+    void testWinGameFrom40() {
+        matchScore.increasePlayerPoints(GamePlayer.PLAYER_ONE, 40);
+        pointCalculationService.calculatePlayerPointsInRegularMode(GamePlayer.PLAYER_ONE, matchScore);
+        assertEquals(0, matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE));
+        assertEquals(1, matchScore.getPlayer1Games());
+    }
+
+    @Test
+    void testDeuceScenario() {
+        matchScore.increasePlayerPoints(GamePlayer.PLAYER_ONE, 40);
+        matchScore.increasePlayerPoints(GamePlayer.PLAYER_TWO, 40);
+
+        pointCalculationService.calculatePlayerPointsInRegularMode(GamePlayer.PLAYER_ONE, matchScore);
+        assertEquals(1, matchScore.getPlayerAds(GamePlayer.PLAYER_ONE));
+
+        pointCalculationService.calculatePlayerPointsInRegularMode(GamePlayer.PLAYER_TWO, matchScore);
+        assertEquals(0, matchScore.getPlayerAds(GamePlayer.PLAYER_ONE));
+        assertEquals(0, matchScore.getPlayerAds(GamePlayer.PLAYER_TWO));
+    }
+
+    @Test
+    void testWinGameWithAdvantage() {
+        matchScore.increasePlayerPoints(GamePlayer.PLAYER_ONE, 40);
+        matchScore.increasePlayerPoints(GamePlayer.PLAYER_TWO, 40);
+
+        pointCalculationService.calculatePlayerPointsInRegularMode(GamePlayer.PLAYER_ONE, matchScore);
+        pointCalculationService.calculatePlayerPointsInRegularMode(GamePlayer.PLAYER_ONE, matchScore);
+
+        assertEquals(1, matchScore.getPlayer1Games());
+        assertEquals(0, matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE));
+        assertEquals(0, matchScore.getPlayerAds(GamePlayer.PLAYER_ONE));
+    }
+
+    @Test
+    void testTieBreakPoints() {
+        matchScore.setTieBreak(true);
+        for (int i = 0; i < 6; i++) {
+            pointCalculationService.calculatePlayerPointsInTieBreakMode(GamePlayer.PLAYER_ONE, matchScore);
+            pointCalculationService.calculatePlayerPointsInTieBreakMode(GamePlayer.PLAYER_TWO, matchScore);
+        }
+
+
+        assertEquals(6, matchScore.getPlayer1TieBreakPoints());
+        assertEquals(6, matchScore.getPlayer2TieBreakPoints());
+
+
+        pointCalculationService.calculatePlayerPointsInTieBreakMode(GamePlayer.PLAYER_ONE, matchScore);
+
+
+        assertEquals(7, matchScore.getPlayer1TieBreakPoints());
+        assertEquals(6, matchScore.getPlayer2TieBreakPoints());
+
+        pointCalculationService.calculatePlayerPointsInTieBreakMode(GamePlayer.PLAYER_ONE, matchScore);
+
+
+
+
+        assertEquals(0, matchScore.getPlayer1TieBreakPoints());
+        assertEquals(0, matchScore.getPlayer2TieBreakPoints());
+
+        assertEquals(1, matchScore.getPlayer1Sets());
+        assertFalse(matchScore.isTieBreak());
+    }
+
+
+
+}
