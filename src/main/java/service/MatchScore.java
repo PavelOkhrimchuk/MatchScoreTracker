@@ -47,8 +47,20 @@ public class MatchScore {
     public void increasePlayerGames(GamePlayer player) {
         if (player == GamePlayer.PLAYER_ONE) {
             player1Games++;
+            checkSetWinner();
         } else if (player == GamePlayer.PLAYER_TWO) {
             player2Games++;
+            checkSetWinner();
+        }
+    }
+
+    private void checkSetWinner() {
+        if (player1Games >= 6 && (player1Games - player2Games) >= 2) {
+            player1Sets++;
+            clearGames();
+        } else if (player2Games >= 6 && (player2Games - player1Games) >= 2) {
+            player2Sets++;
+            clearGames();
         }
     }
 
@@ -74,8 +86,23 @@ public class MatchScore {
         } else if (player == GamePlayer.PLAYER_TWO) {
             player2TieBreakPoints++;
         }
+        checkTieBreakWinner();
     }
 
+    private void checkTieBreakWinner() {
+
+        if (player1TieBreakPoints >= 7 && (player1TieBreakPoints - player2TieBreakPoints) >= 2) {
+
+            System.out.println("Player 1 wins the tie-break with " + player1TieBreakPoints + " points.");
+            player1Sets++;
+            clearTieBreakPoints();
+        } else if (player2TieBreakPoints >= 7 && (player2TieBreakPoints - player1TieBreakPoints) >= 2) {
+
+            System.out.println("Player 2 wins the tie-break with " + player2TieBreakPoints + " points.");
+            player2Sets++;
+            clearTieBreakPoints();
+        }
+    }
     public int getPlayerPoints(GamePlayer player) {
         if (player == GamePlayer.PLAYER_ONE) {
             return player1Score;
@@ -129,6 +156,7 @@ public class MatchScore {
     public void clearTieBreakPoints() {
       player1TieBreakPoints = 0;
       player2TieBreakPoints = 0;
+      setTieBreak(false);
     }
 
     public void clearGames() {
