@@ -81,35 +81,34 @@ class MatchScoreTest {
     }
 
     @Test
-    void testTieBreakPoints() {
-        matchScore.setTieBreak(true);
+    void testWinMatchWithoutTieBreak() {
+
         for (int i = 0; i < 6; i++) {
-            pointCalculationService.calculatePlayerPointsInTieBreakMode(GamePlayer.PLAYER_ONE, matchScore);
-            pointCalculationService.calculatePlayerPointsInTieBreakMode(GamePlayer.PLAYER_TWO, matchScore);
+            gameManagementService.playerWinsGame(GamePlayer.PLAYER_ONE, matchScore);
         }
 
-
-        assertEquals(6, matchScore.getPlayer1TieBreakPoints());
-        assertEquals(6, matchScore.getPlayer2TieBreakPoints());
-
-
-        pointCalculationService.calculatePlayerPointsInTieBreakMode(GamePlayer.PLAYER_ONE, matchScore);
-
-
-        assertEquals(7, matchScore.getPlayer1TieBreakPoints());
-        assertEquals(6, matchScore.getPlayer2TieBreakPoints());
-
-        pointCalculationService.calculatePlayerPointsInTieBreakMode(GamePlayer.PLAYER_ONE, matchScore);
-
-
-
-
-        assertEquals(0, matchScore.getPlayer1TieBreakPoints());
-        assertEquals(0, matchScore.getPlayer2TieBreakPoints());
-
         assertEquals(1, matchScore.getPlayer1Sets());
-        assertFalse(matchScore.isTieBreak());
+
+        for (int i = 0; i < 6; i++) {
+            gameManagementService.playerWinsGame(GamePlayer.PLAYER_TWO, matchScore);
+        }
+
+        assertEquals(1, matchScore.getPlayer2Sets());
+
+        // Игрок 1 выигрывает второй сет
+        for (int i = 0; i < 6; i++) {
+            gameManagementService.playerWinsGame(GamePlayer.PLAYER_ONE, matchScore);
+        }
+
+        assertEquals(2, matchScore.getPlayer1Sets());
+        assertTrue(matchScoreCalculationService.isMatchFinished(matchScore));
+        assertEquals(GamePlayer.PLAYER_ONE, matchScore.getWinner());
     }
+
+
+
+
+
 
 
 
