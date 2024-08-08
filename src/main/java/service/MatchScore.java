@@ -195,6 +195,11 @@ public class MatchScore {
                 player2Sets, player2Games, player2Score);
     }
 
+    public boolean isMatchFinished() {
+        int setsToWin = 2;
+        return player1Sets >= setsToWin || player2Sets >= setsToWin;
+    }
+
 
 
 

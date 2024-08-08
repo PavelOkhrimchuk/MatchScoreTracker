@@ -30,11 +30,36 @@
                 </div>
             </div>
         </div>
-        <!-- Form for updating score -->
-        <form action="match-score?id=${matchId}" method="post" class="score-update-form">
-            <button type="submit" name="player" value="player1">Player 1 Won Point</button>
-            <button type="submit" name="player" value="player2">Player 2 Won Point</button>
-        </form>
+
+        <!-- Если матч закончился, отображаем финальный счёт -->
+        <c:if test="${matchScore.isMatchFinished()}">
+            <div id="final-score">
+                <h2>Final Score</h2>
+                <div class="score-board">
+                    <div class="player-score">
+                        <p id="final-player1-name">${matchScore.player1Name}</p>
+                        <p>Points: <span id="final-player1-points">${matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE)}</span></p>
+                        <p>Games: <span id="final-player1-games">${matchScore.getPlayerGames(GamePlayer.PLAYER_ONE)}</span></p>
+                        <p>Sets: <span id="final-player1-sets">${matchScore.getPlayerSets(GamePlayer.PLAYER_ONE)}</span></p>
+                    </div>
+                    <div class="player-score">
+                        <p id="final-player2-name">${matchScore.player2Name}</p>
+                        <p>Points: <span id="final-player2-points">${matchScore.getPlayerPoints(GamePlayer.PLAYER_TWO)}</span></p>
+                        <p>Games: <span id="final-player2-games">${matchScore.getPlayerGames(GamePlayer.PLAYER_TWO)}</span></p>
+                        <p>Sets: <span id="final-player2-sets">${matchScore.getPlayerSets(GamePlayer.PLAYER_TWO)}</span></p>
+                    </div>
+                </div>
+                <p>Winner: <span id="winner">${matchScore.winner}</span></p>
+            </div>
+        </c:if>
+
+        <!-- Form for updating score (если матч не завершён) -->
+        <c:if test="${!matchScore.isMatchFinished()}">
+            <form action="match-score?id=${matchId}" method="post" class="score-update-form">
+                <button type="submit" name="player" value="player1">Player 1 Won Point</button>
+                <button type="submit" name="player" value="player2">Player 2 Won Point</button>
+            </form>
+        </c:if>
     </div>
 </div>
 </body>
