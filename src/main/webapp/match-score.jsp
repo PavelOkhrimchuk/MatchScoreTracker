@@ -1,5 +1,5 @@
 <%@ page import="model.Match, model.Player, service.MatchScore, service.GamePlayer" %>
-<%@ page import="java.util.UUID, java.util.Optional" %>
+<%@ page import="java.util.Optional" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +12,6 @@
 <div class="main-container">
     <div class="score-container">
         <h1>Match Score</h1>
-        <!-- Таблица с именами игроков и текущим счётом -->
         <div class="score-board">
             <div class="player-score">
                 <h2 id="player1-name">${matchScore.player1Name}</h2>
@@ -31,33 +30,12 @@
                 </div>
             </div>
         </div>
-        <!-- Формы и кнопки для обновления счёта -->
+        <!-- Form for updating score -->
         <form action="match-score" method="post" class="score-update-form">
-            <input type="hidden" name="uuid" value="${matchId}">
+            <input type="hidden" name="id" value="${match.id}"> <!-- Сохранение ID матча в скрытом поле -->
             <button type="submit" name="player" value="player1">Player 1 Won Point</button>
             <button type="submit" name="player" value="player2">Player 2 Won Point</button>
         </form>
-        <!-- Если матч закончился, отображаем финальный счёт -->
-        <c:if test="${matchScore.isMatchFinished}">
-            <div id="final-score">
-                <h2>Final Score</h2>
-                <div class="score-board">
-                    <div class="player-score">
-                        <p id="final-player1-name">${matchScore.player1Name}</p>
-                        <p>Points: <span id="final-player1-points">${matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE)}</span></p>
-                        <p>Games: <span id="final-player1-games">${matchScore.getPlayerGames(GamePlayer.PLAYER_ONE)}</span></p>
-                        <p>Sets: <span id="final-player1-sets">${matchScore.getPlayerSets(GamePlayer.PLAYER_ONE)}</span></p>
-                    </div>
-                    <div class="player-score">
-                        <p id="final-player2-name">${matchScore.player2Name}</p>
-                        <p>Points: <span id="final-player2-points">${matchScore.getPlayerPoints(GamePlayer.PLAYER_TWO)}</span></p>
-                        <p>Games: <span id="final-player2-games">${matchScore.getPlayerGames(GamePlayer.PLAYER_TWO)}</span></p>
-                        <p>Sets: <span id="final-player2-sets">${matchScore.getPlayerSets(GamePlayer.PLAYER_TWO)}</span></p>
-                    </div>
-                </div>
-                <p>Winner: <span id="winner">${matchScore.winner}</span></p>
-            </div>
-        </c:if>
     </div>
 </div>
 </body>

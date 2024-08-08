@@ -14,20 +14,28 @@ import service.PlayerService;
 import util.HibernateUtil;
 
 import java.io.IOException;
-import java.util.UUID;
+import java.util.logging.Logger;
 
 @WebServlet("/new-match")
 
 public class NewMatchServlet extends HttpServlet {
 
-    private final OngoingMatchesService ongoingMatchesService = new OngoingMatchesService();
+    private static final Logger logger = Logger.getLogger(NewMatchServlet.class.getName());
+    private OngoingMatchesService ongoingMatchesService;
     private PlayerService playerService;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        playerService = new PlayerService(new PlayerRepositoryImpl(HibernateUtil.getSessionFactory().openSession()));
 
+        ongoingMatchesService = (OngoingMatchesService) getServletContext().getAttribute("ongoingMatchesService");
+        if (ongoingMatchesService == null) {
+            ongoingMatchesService = new OngoingMatchesService();
+            getServletContext().setAttribute("ongoingMatchesService", ongoingMatchesService);
+            logger.info("OngoingMatchesService initialized.");
+        }
+
+        playerService = new PlayerService(new PlayerRepositoryImpl(HibernateUtil.getSessionFactory().openSession()));
     }
 
     @Override
@@ -52,8 +60,13 @@ public class NewMatchServlet extends HttpServlet {
         match.setPlayer1(player1);
         match.setPlayer2(player2);
 
-        UUID matchId = ongoingMatchesService.add(match);
+        Integer matchId = ongoingMatchesService.add(match);
+        if (matchId == null) {
+            resp.sendRedirect(req.getContextPath() + "/error-page");
+            return;
+        }
 
-        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + matchId.toString());
+        logger.info("New match created with ID: " + matchId);
+        resp.sendRedirect(req.getContextPath() + "/match-score?id=" + matchId);
     }
 }
