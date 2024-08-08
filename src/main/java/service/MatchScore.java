@@ -2,9 +2,6 @@ package service;
 
 import lombok.Getter;
 import lombok.Setter;
-import service.GamePlayer;
-
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -34,6 +31,29 @@ public class MatchScore {
 
     private GamePlayer winner;
     private String status;
+
+    public MatchScore(String player1Name, String player2Name) {
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
+        this.player1Score = 0;
+        this.player2Score = 0;
+        this.player1Games = 0;
+        this.player2Games = 0;
+        this.player1Sets = 0;
+        this.player2Sets = 0;
+        this.player1TieBreakPoints = 0;
+        this.player2TieBreakPoints = 0;
+        this.isTieBreak = false;
+        this.isMatchFinished = false;
+        this.player1Ads = 0;
+        this.player2Ads = 0;
+        this.winner = null;
+        this.status = "In Progress";
+    }
+
+    public MatchScore() {
+
+    }
 
     public void increasePlayerPoints(GamePlayer player, int points) {
         if (player == GamePlayer.PLAYER_ONE) {
@@ -167,6 +187,12 @@ public class MatchScore {
     public void clearAds() {
         player1Ads = 0;
         player2Ads = 0;
+    }
+
+    public String getMatchScore() {
+        return String.format("Player 1: %d sets, %d games, %d points\nPlayer 2: %d sets, %d games, %d points",
+                player1Sets, player1Games, player1Score,
+                player2Sets, player2Games, player2Score);
     }
 
 
