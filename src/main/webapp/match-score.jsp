@@ -31,8 +31,7 @@
             </div>
         </div>
         <!-- Form for updating score -->
-        <form action="match-score" method="post" class="score-update-form">
-            <input type="hidden" name="id" value="${match.id}"> <!-- Сохранение ID матча в скрытом поле -->
+        <form action="match-score?id=${matchId}" method="post" class="score-update-form">
             <button type="submit" name="player" value="player1">Player 1 Won Point</button>
             <button type="submit" name="player" value="player2">Player 2 Won Point</button>
         </form>
