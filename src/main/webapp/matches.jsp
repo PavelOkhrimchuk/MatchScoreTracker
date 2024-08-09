@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finished Matches</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/matches.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/matches_list.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>

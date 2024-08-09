@@ -1,11 +1,9 @@
-
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #00b4db, #0083b0);
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #4ca1af, #c4e0e5);
 }
-
 
 .main-container {
     display: flex;
@@ -13,25 +11,23 @@ body {
     align-items: center;
     height: 100vh;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-
 .score-container {
-    background: #fff;
+    background: #ffffff;
     padding: 40px;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 1000px;
     width: 100%;
     text-align: center;
 }
 
-
 .score-container h1 {
     margin: 0 0 20px 0;
-    color: #333;
+    color: #333333;
 }
-
 
 .score-board {
     display: flex;
@@ -40,48 +36,46 @@ body {
     margin-bottom: 20px;
 }
 
-
 .player-score {
     background: #f9f9f9;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 45%;
 }
 
 .player-score h2 {
     margin: 0 0 10px 0;
-    color: #333;
+    color: #333333;
 }
 
 .score-details p {
     margin: 5px 0;
     font-size: 18px;
-    color: #555;
+    color: #555555;
 }
-
 
 .score-update-form {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .score-update-form button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
+    padding: 12px 24px;
+    border: 2px solid #357e86;
+    border-radius: 8px;
+    background-color: #4ca1af;
+    color: #ffffff;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .score-update-form button:hover {
-    background-color: #0056b3;
+    background-color: #357e86;
+    border-color: #255b61;
 }
-
 
 #final-score {
     margin-top: 20px;
@@ -98,7 +92,6 @@ body {
 #final-score p {
     margin: 5px 0;
 }
-
 
 .hidden {
     display: none;

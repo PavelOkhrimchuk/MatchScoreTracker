@@ -1,8 +1,8 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #00b4db, #0083b0);
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #4ca1af, #c4e0e5);
 }
 
 .main-container {
@@ -23,7 +23,7 @@ body {
 
 .filter-form label {
     font-weight: bold;
-    color: #fff;
+    color: #ffffff;
 }
 
 .filter-form input[type="text"] {
@@ -37,23 +37,23 @@ body {
     padding: 8px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #4ca1af;
+    color: #ffffff;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .filter-form button:hover {
-    background-color: #0056b3;
+    background-color: #357e86;
 }
 
 .matches-list {
     width: 100%;
     max-width: 800px;
-    background: #fff;
+    background: #ffffff;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -81,15 +81,15 @@ body {
     padding: 8px 12px;
     margin: 0 5px;
     border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #4ca1af;
+    color: #ffffff;
     text-decoration: none;
 }
 
 .pagination a.active {
-    background-color: #0056b3;
+    background-color: #357e86;
 }
 
 .pagination a:hover {
-    background-color: #0056b3;
+    background-color: #357e86;
 }

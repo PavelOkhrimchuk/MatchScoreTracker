@@ -1,8 +1,8 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #00b4db, #0083b0);
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #4ca1af, #c4e0e5);
 }
 
 .main-container {
@@ -14,9 +14,9 @@ body {
 }
 
 .final-score-container {
-    background: #fff;
+    background: #ffffff;
     padding: 40px;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 1000px;
     width: 100%;
@@ -25,7 +25,7 @@ body {
 
 .final-score-container h1 {
     margin: 0 0 20px 0;
-    color: #333;
+    color: #333333;
 }
 
 .score-board {
@@ -38,27 +38,27 @@ body {
 .player-score {
     background: #f9f9f9;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 45%;
 }
 
 .player-score h2 {
     margin: 0 0 10px 0;
-    color: #333;
+    color: #333333;
 }
 
 .player-score p {
     margin: 5px 0;
     font-size: 18px;
-    color: #555;
+    color: #555555;
 }
 
 .winner {
     font-size: 24px;
     font-weight: bold;
     margin: 20px 0;
-    color: #333;
+    color: #333333;
 }
 
 .hidden {
