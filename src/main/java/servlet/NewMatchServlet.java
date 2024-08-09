@@ -11,7 +11,6 @@ import model.Player;
 import repository.PlayerRepositoryImpl;
 import service.OngoingMatchesService;
 import service.PlayerService;
-import util.HibernateUtil;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -35,7 +34,7 @@ public class NewMatchServlet extends HttpServlet {
             logger.info("OngoingMatchesService initialized.");
         }
 
-        playerService = new PlayerService(new PlayerRepositoryImpl(HibernateUtil.getSessionFactory().openSession()));
+        playerService = new PlayerService(new PlayerRepositoryImpl());
     }
 
     @Override

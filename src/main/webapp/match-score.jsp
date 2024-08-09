@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Score</title>
     <link rel="stylesheet" href="css/matchscore.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
 <div class="main-container">
     <div class="score-container">
         <h1>Match Score</h1>
@@ -30,13 +32,16 @@
                 </div>
             </div>
         </div>
-        <!-- Form for updating score -->
-        <form action="match-score" method="post" class="score-update-form">
-            <input type="hidden" name="id" value="${match.id}"> <!-- Сохранение ID матча в скрытом поле -->
-            <button type="submit" name="player" value="player1">Player 1 Won Point</button>
-            <button type="submit" name="player" value="player2">Player 2 Won Point</button>
-        </form>
+
+        <!-- Форма для обновления счета (если матч не завершён) -->
+        <c:if test="${!matchScore.isMatchFinished()}">
+            <form action="match-score?id=${matchId}" method="post" class="score-update-form">
+                <button type="submit" name="player" value="player1">Player 1 Won Point</button>
+                <button type="submit" name="player" value="player2">Player 2 Won Point</button>
+            </form>
+        </c:if>
     </div>
 </div>
 </body>
 </html>
+
