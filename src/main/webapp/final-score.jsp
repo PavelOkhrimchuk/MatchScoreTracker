@@ -14,18 +14,14 @@
         <div class="score-board">
             <div class="player-score">
                 <h2>${matchScore.player1Name}</h2>
-                <p>Points: ${matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE)}</p>
-                <p>Games: ${matchScore.getPlayerGames(GamePlayer.PLAYER_ONE)}</p>
                 <p>Sets: ${matchScore.getPlayerSets(GamePlayer.PLAYER_ONE)}</p>
             </div>
             <div class="player-score">
                 <h2>${matchScore.player2Name}</h2>
-                <p>Points: ${matchScore.getPlayerPoints(GamePlayer.PLAYER_TWO)}</p>
-                <p>Games: ${matchScore.getPlayerGames(GamePlayer.PLAYER_TWO)}</p>
                 <p>Sets: ${matchScore.getPlayerSets(GamePlayer.PLAYER_TWO)}</p>
             </div>
         </div>
-        <p>Winner: ${match.getWinner().getName()}</p>
+        <p>Winner: ${match.getWinner() != null ? match.getWinner().getName() : "Unknown"}</p>
     </div>
 </div>
 </body>
