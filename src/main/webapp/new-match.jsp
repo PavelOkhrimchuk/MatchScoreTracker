@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Match</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menu.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
 <div class="main-container">
     <div class="form-container">
         <h1>Create New Match</h1>

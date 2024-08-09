@@ -8,8 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finished Matches</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/matches.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
 <div class="main-container">
     <div class="filter-container">
         <form action="${pageContext.request.contextPath}/matches" method="get" class="filter-form">
@@ -31,7 +33,7 @@
             </tr>
             </thead>
             <tbody>
-            <%-- Check if matchPage has content --%>
+
             <% if (request.getAttribute("matchPage") != null) {
                 Page<Match> matchPage = (Page<Match>) request.getAttribute("matchPage");
                 if (matchPage != null && matchPage.getContent() != null && !matchPage.getContent().isEmpty()) {
@@ -55,9 +57,9 @@
     </div>
 
     <div class="pagination">
-        <%-- Calculate and display pagination controls --%>
+
         <%
-            int pageSize = 10; // Ensure this matches the page size used in your servlet
+            int pageSize = 8;
             int pageNumber = (request.getParameter("page") != null) ? Integer.parseInt(request.getParameter("page")) : 1;
             Long totalMatches = (Long) request.getAttribute("totalMatches");
             int totalPages = (int) Math.ceil((double) totalMatches / pageSize);

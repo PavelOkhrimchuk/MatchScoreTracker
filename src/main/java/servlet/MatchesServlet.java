@@ -44,7 +44,7 @@ public class MatchesServlet extends HttpServlet {
         String pageParam = req.getParameter("page");
 
         int pageNumber = pageParam != null ? Integer.parseInt(pageParam) : 1;
-        int pageSize = 10;
+        int pageSize = 8;
 
         Page<Match> matchPage = finishedMatchesPersistenceService.getFinishedMatchesWithPaginationAndFilter(pageNumber, pageSize, playerName);
         Long totalMatches = finishedMatchesPersistenceService.countTotalMatches(playerName);

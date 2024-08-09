@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Score</title>
     <link rel="stylesheet" href="css/finalscore.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
 <div class="main-container">
     <div class="final-score-container">
         <h1>Final Score</h1>

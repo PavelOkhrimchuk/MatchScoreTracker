@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Score</title>
     <link rel="stylesheet" href="css/matchscore.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
 <div class="main-container">
     <div class="score-container">
         <h1>Match Score</h1>
@@ -43,9 +45,3 @@
 </body>
 </html>
 
-body {
-margin: 0;
-padding: 0;
-font-family: Arial, sans-serif;
-background: linear-gradient(to right, #00b4db, #0083b0);
-}
