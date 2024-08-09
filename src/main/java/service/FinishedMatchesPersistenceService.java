@@ -56,7 +56,7 @@ public class FinishedMatchesPersistenceService {
             String winnerName = matchScore.getMatchWinner();
             match.setWinner(findPlayer(winnerName));
 
-            matchRepository.save(match);
+
             logger.info("Match created from score: " + match);
             return match;
         } catch (Exception e) {
