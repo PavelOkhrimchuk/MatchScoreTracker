@@ -200,6 +200,13 @@ public class MatchScore {
         return player1Sets >= setsToWin || player2Sets >= setsToWin;
     }
 
+    public String getMatchWinner() {
+        if (winner == null) {
+            return "No winner yet";
+        }
+        return winner == GamePlayer.PLAYER_ONE ? player1Name : player2Name;
+    }
+
 
 
 
