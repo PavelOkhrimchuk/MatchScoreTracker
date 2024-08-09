@@ -6,8 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Match;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import repository.MatchRepository;
 import repository.MatchRepositoryImpl;
 import repository.PlayerRepository;
@@ -19,7 +17,6 @@ import service.OngoingMatchesService;
 import service.matchScore.GameManagementService;
 import service.matchScore.MatchScoreCalculationService;
 import service.matchScore.PointCalculationService;
-import util.HibernateUtil;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -31,7 +28,6 @@ public class MatchScoreServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(MatchScoreServlet.class.getName());
     private OngoingMatchesService ongoingMatchesService;
     private MatchScoreCalculationService matchScoreCalculationService;
-    private FinishedMatchesPersistenceService finishedMatchesPersistenceService;
 
     @Override
     public void init() throws ServletException {
@@ -39,7 +35,6 @@ public class MatchScoreServlet extends HttpServlet {
 
         ongoingMatchesService = (OngoingMatchesService) getServletContext().getAttribute("ongoingMatchesService");
         matchScoreCalculationService = (MatchScoreCalculationService) getServletContext().getAttribute("matchScoreCalculationService");
-        finishedMatchesPersistenceService = (FinishedMatchesPersistenceService) getServletContext().getAttribute("finishedMatchesPersistenceService");
 
         if (ongoingMatchesService == null) {
             ongoingMatchesService = new OngoingMatchesService();
@@ -54,19 +49,6 @@ public class MatchScoreServlet extends HttpServlet {
             );
             getServletContext().setAttribute("matchScoreCalculationService", matchScoreCalculationService);
             logger.info("MatchScoreCalculationService initialized.");
-        }
-
-        if (finishedMatchesPersistenceService == null) {
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session session = sessionFactory.openSession();
-
-            MatchRepository matchRepository = new MatchRepositoryImpl(session);
-            PlayerRepository playerRepository = new PlayerRepositoryImpl(session);
-            finishedMatchesPersistenceService = new FinishedMatchesPersistenceService(matchRepository, playerRepository);
-
-            getServletContext().setAttribute("finishedMatchesPersistenceService", finishedMatchesPersistenceService);
-            session.close();
-            logger.info("FinishedMatchesPersistenceService initialized.");
         }
     }
 
@@ -111,6 +93,8 @@ public class MatchScoreServlet extends HttpServlet {
         req.setAttribute("matchId", matchId); // Передача matchId в JSP
         req.setAttribute("match", match);
         req.setAttribute("matchScore", matchScore);
+        logger.info("Forwarding to match-score.jsp with match ID: " + matchId);
+
         req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
     }
 
@@ -119,7 +103,6 @@ public class MatchScoreServlet extends HttpServlet {
         String idString = req.getParameter("id");
         String playerNumberParameter = req.getParameter("player");
 
-        // Логирование получения параметров
         logger.info("Received POST request with parameters - id: " + idString + ", player: " + playerNumberParameter);
 
         if (idString == null || idString.isEmpty()) {
@@ -159,19 +142,29 @@ public class MatchScoreServlet extends HttpServlet {
         boolean matchFinished = matchScoreCalculationService.playerWinsPoint(player, matchScore);
         logger.info("Match finished: " + matchFinished);
 
-        if (matchFinished) {
-            Match finishedMatch = finishedMatchesPersistenceService.createMatchFromScore(matchScore);
-            finishedMatchesPersistenceService.saveFinishedMatch(finishedMatch);
-            ongoingMatchesService.remove(matchId);
+        try {
+            MatchRepository matchRepository = new MatchRepositoryImpl();
+            PlayerRepository playerRepository = new PlayerRepositoryImpl();
+            FinishedMatchesPersistenceService finishedMatchesPersistenceService = new FinishedMatchesPersistenceService(matchRepository, playerRepository);
 
-            logger.info("Match finished, saving and removing. Winner: " + match.getWinner());
+            if (matchFinished) {
+                Match finishedMatch = finishedMatchesPersistenceService.createMatchFromScore(matchScore);
+                finishedMatchesPersistenceService.saveFinishedMatch(finishedMatch);
+                ongoingMatchesService.remove(matchId);
 
-            req.setAttribute("matchId", matchId); // Передача matchId в JSP
-            req.setAttribute("match", match);
-            req.getRequestDispatcher("/final-score.jsp").forward(req, resp);
-        } else {
-            logger.info("Redirecting to match-score with ID: " + matchId);
-            resp.sendRedirect(req.getContextPath() + "/match-score?id=" + matchId);
+                logger.info("Match finished, saving and removing. Winner: " + match.getWinner());
+
+                req.setAttribute("matchId", matchId);
+                req.setAttribute("match", finishedMatch);
+                req.setAttribute("matchScore", matchScore);
+                req.getRequestDispatcher("/final-score.jsp").forward(req, resp);
+            } else {
+                logger.info("Redirecting to match-score with ID: " + matchId);
+                resp.sendRedirect(req.getContextPath() + "/match-score?id=" + matchId);
+            }
+        } catch (Exception e) {
+            logger.severe("Error processing match: " + e.getMessage());
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing the match.");
         }
     }
 
