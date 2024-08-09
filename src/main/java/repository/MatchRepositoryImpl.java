@@ -2,6 +2,7 @@ package repository;
 
 import lombok.Setter;
 import model.Match;
+import model.Page;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -69,4 +70,46 @@ public class MatchRepositoryImpl implements MatchRepository {
             throw e;
         }
     }
+
+
+    @Override
+    public Page<Match> findMatchesWithPaginationAndFilter(int pageNumber, int pageSize, String playerName) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT m FROM Match m JOIN m.player1 p1 JOIN m.player2 p2";
+            if (playerName != null && !playerName.isEmpty()) {
+                hql += " WHERE p1.name = :playerName OR p2.name = :playerName";
+            }
+
+            Query<Match> query = session.createQuery(hql, Match.class)
+                    .setFirstResult((pageNumber - 1) * pageSize)
+                    .setMaxResults(pageSize);
+
+            if (playerName != null && !playerName.isEmpty()) {
+                query.setParameter("playerName", playerName);
+            }
+
+            Long totalMatches = countMatchesByPlayerName(playerName);
+            return new Page<>(query.list(), pageNumber, pageSize, totalMatches);
+
+        }
+    }
+
+
+    @Override
+    public Long countMatchesByPlayerName(String playerName) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT COUNT(m) FROM Match m JOIN m.player1 p1 JOIN m.player2 p2";
+            if (playerName != null && !playerName.isEmpty()) {
+                hql += " WHERE p1.name = :playerName OR p2.name = :playerName";
+            }
+            Query<Long> query = session.createQuery(hql, Long.class);
+
+            if (playerName != null && !playerName.isEmpty()) {
+                query.setParameter("playerName", playerName);
+            }
+
+            return query.uniqueResult();
+        }
+    }
+
 }

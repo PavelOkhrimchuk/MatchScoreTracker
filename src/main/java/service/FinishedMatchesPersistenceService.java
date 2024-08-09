@@ -1,6 +1,7 @@
 package service;
 
 import model.Match;
+import model.Page;
 import model.Player;
 import repository.MatchRepository;
 import repository.PlayerRepository;
@@ -78,6 +79,27 @@ public class FinishedMatchesPersistenceService {
             throw new RuntimeException(errorMessage);
         }
         return player.get();
+    }
+
+    public Page<Match> getFinishedMatchesWithPaginationAndFilter(int pageNumber, int pageSize, String playerName) {
+        logger.info("Retrieving matches with pagination - Page: " + pageNumber + ", Size: " + pageSize + ", Filter by Player: " + playerName);
+        try {
+            return matchRepository.findMatchesWithPaginationAndFilter(pageNumber, pageSize, playerName);
+        } catch (Exception e) {
+            logger.severe("Error retrieving matches: " + e.getMessage());
+            throw e;
+        }
+    }
+
+
+    public Long countTotalMatches(String playerName) {
+        logger.info("Counting total matches with filter by Player: " + playerName);
+        try {
+            return matchRepository.countMatchesByPlayerName(playerName);
+        } catch (Exception e) {
+            logger.severe("Error counting matches: " + e.getMessage());
+            throw e;
+        }
     }
 
 
