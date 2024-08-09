@@ -28,6 +28,7 @@ public class MatchScoreServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(MatchScoreServlet.class.getName());
     private OngoingMatchesService ongoingMatchesService;
     private MatchScoreCalculationService matchScoreCalculationService;
+    private FinishedMatchesPersistenceService finishedMatchesPersistenceService;
 
     @Override
     public void init() throws ServletException {
@@ -50,6 +51,11 @@ public class MatchScoreServlet extends HttpServlet {
             getServletContext().setAttribute("matchScoreCalculationService", matchScoreCalculationService);
             logger.info("MatchScoreCalculationService initialized.");
         }
+
+        MatchRepository matchRepository = new MatchRepositoryImpl();
+        PlayerRepository playerRepository = new PlayerRepositoryImpl();
+        finishedMatchesPersistenceService = new FinishedMatchesPersistenceService(matchRepository, playerRepository);
+        logger.info("FinishedMatchesPersistenceService initialized.");
     }
 
     @Override
@@ -143,9 +149,6 @@ public class MatchScoreServlet extends HttpServlet {
         logger.info("Match finished: " + matchFinished);
 
         try {
-            MatchRepository matchRepository = new MatchRepositoryImpl();
-            PlayerRepository playerRepository = new PlayerRepositoryImpl();
-            FinishedMatchesPersistenceService finishedMatchesPersistenceService = new FinishedMatchesPersistenceService(matchRepository, playerRepository);
 
             if (matchFinished) {
                 Match finishedMatch = finishedMatchesPersistenceService.createMatchFromScore(matchScore);
