@@ -42,3 +42,10 @@
 </div>
 </body>
 </html>
+
+body {
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+background: linear-gradient(to right, #00b4db, #0083b0);
+}
