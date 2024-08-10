@@ -1,6 +1,5 @@
 package repository;
 
-import lombok.Setter;
 import model.Player;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,7 +8,7 @@ import util.HibernateUtil;
 
 import java.util.List;
 import java.util.Optional;
-@Setter
+
 public class PlayerRepositoryImpl implements PlayerRepository {
 
     @Override

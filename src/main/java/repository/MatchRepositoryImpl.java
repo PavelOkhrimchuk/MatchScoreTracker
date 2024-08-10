@@ -1,6 +1,5 @@
 package repository;
 
-import lombok.Setter;
 import model.Match;
 import model.Page;
 import org.hibernate.Session;
@@ -10,7 +9,7 @@ import util.HibernateUtil;
 
 import java.util.List;
 import java.util.Optional;
-@Setter
+
 public class MatchRepositoryImpl implements MatchRepository {
 
     @Override
