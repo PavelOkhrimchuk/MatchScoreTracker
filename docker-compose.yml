@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    environment:
+      DB_URL: jdbc:h2:mem:test
+      DB_USERNAME: ohrim
+      DB_PASSWORD:
+    ports:
+      - "8082:8080"
