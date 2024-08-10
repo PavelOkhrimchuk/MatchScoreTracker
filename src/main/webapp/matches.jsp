@@ -57,18 +57,19 @@
     </div>
 
     <div class="pagination">
-
         <%
             int pageSize = 8;
             int pageNumber = (request.getParameter("page") != null) ? Integer.parseInt(request.getParameter("page")) : 1;
             Long totalMatches = (Long) request.getAttribute("totalMatches");
             int totalPages = (int) Math.ceil((double) totalMatches / pageSize);
 
+            String filterByPlayerName = request.getParameter("filter_by_player_name") != null ? request.getParameter("filter_by_player_name") : "";
+
             if (totalPages > 1) {
                 for (int i = 1; i <= totalPages; i++) {
                     String cssClass = (i == pageNumber) ? "active" : "";
         %>
-        <a href="${pageContext.request.contextPath}/matches?page=<%= i %>&filter_by_player_name=<%= request.getParameter("filter_by_player_name") %>" class="<%= cssClass %>"><%= i %></a>
+        <a href="${pageContext.request.contextPath}/matches?page=<%= i %>&filter_by_player_name=<%= filterByPlayerName %>" class="<%= cssClass %>"><%= i %></a>
         <%
                 }
             }
