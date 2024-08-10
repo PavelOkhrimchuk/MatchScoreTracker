@@ -1,5 +1,6 @@
 package servlet;
 
+import exception.MatchNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -44,8 +45,13 @@ public class MatchesServlet extends HttpServlet {
         int pageNumber = pageParam != null ? Integer.parseInt(pageParam) : 1;
         int pageSize = 8;
 
+
         Page<Match> matchPage = finishedMatchesPersistenceService.getFinishedMatchesWithPaginationAndFilter(pageNumber, pageSize, playerName);
         Long totalMatches = finishedMatchesPersistenceService.countTotalMatches(playerName);
+
+        if (matchPage == null) {
+            throw new MatchNotFoundException("No matches found for player: " + playerName);
+        }
 
         req.setAttribute("matchPage", matchPage);
         req.setAttribute("totalMatches", totalMatches);

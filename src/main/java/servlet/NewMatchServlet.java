@@ -1,6 +1,9 @@
 package servlet;
 
 
+import exception.DuplicatePlayerException;
+import exception.InvalidPlayerNameException;
+import exception.PlayerNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -47,13 +50,20 @@ public class NewMatchServlet extends HttpServlet {
         String player1Name = req.getParameter("player1");
         String player2Name = req.getParameter("player2");
 
+        if (player1Name == null || player1Name.isEmpty() || player2Name == null || player2Name.isEmpty()) {
+            throw new InvalidPlayerNameException("Player names must not be empty!");
+        }
+
         if (player1Name.equals(player2Name)) {
-            resp.sendRedirect(req.getContextPath() + "/new-match?error=same_player");
-            return;
+            throw new DuplicatePlayerException("Players must have different names!");
         }
 
         Player player1 = playerService.getPlayer(player1Name);
         Player player2 = playerService.getPlayer(player2Name);
+
+        if (player1 == null || player2 == null) {
+            throw new PlayerNotFoundException("One or both players not found!");
+        }
 
         Match match = new Match();
         match.setPlayer1(player1);
@@ -68,4 +78,6 @@ public class NewMatchServlet extends HttpServlet {
         logger.info("New match created with ID: " + matchId);
         resp.sendRedirect(req.getContextPath() + "/match-score?id=" + matchId);
     }
+
+
 }

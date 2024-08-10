@@ -1,5 +1,8 @@
 package servlet;
 
+import exception.InvalidMatchIdException;
+import exception.MatchNotFoundException;
+import exception.MatchScoreNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -63,35 +66,27 @@ public class MatchScoreServlet extends HttpServlet {
         String idString = req.getParameter("id");
 
         if (idString == null || idString.isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Match ID is missing!");
-            logger.warning("Match ID is missing in GET request.");
-            return;
+            throw new InvalidMatchIdException("Match ID is missing!");
         }
 
         Integer matchId;
         try {
             matchId = Integer.parseInt(idString);
         } catch (NumberFormatException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid match ID format!");
-            logger.warning("Invalid match ID format: " + idString);
-            return;
+            throw new InvalidMatchIdException("Invalid match ID format!");
         }
 
         Optional<Match> matchOpt = ongoingMatchesService.get(matchId);
 
         if (matchOpt.isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Match with ID " + matchId + " not found!");
-            logger.warning("Match with ID " + matchId + " not found.");
-            return;
+            throw new MatchNotFoundException("Match with ID " + matchId + " not found!");
         }
 
         Match match = matchOpt.get();
         MatchScore matchScore = ongoingMatchesService.getMatchScore(matchId).orElse(null);
 
         if (matchScore == null) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Match score not found!");
-            logger.warning("Match score not found for ID: " + matchId);
-            return;
+            throw new MatchScoreNotFoundException("Match score not found for ID: " + matchId);
         }
 
         req.setAttribute("matchId", matchId);
@@ -107,9 +102,7 @@ public class MatchScoreServlet extends HttpServlet {
         String playerNumberParameter = req.getParameter("player");
 
         if (idString == null || idString.isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Match ID is missing!");
-            logger.warning("Match ID is missing in POST request.");
-            return;
+            throw new InvalidMatchIdException("Match ID is missing!");
         }
 
         Integer matchId = Integer.parseInt(idString);
@@ -117,18 +110,14 @@ public class MatchScoreServlet extends HttpServlet {
         Optional<Match> matchOpt = ongoingMatchesService.get(matchId);
 
         if (matchOpt.isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Match with ID " + matchId + " not found!");
-            logger.warning("Match with ID " + matchId + " not found.");
-            return;
+            throw new MatchNotFoundException("Match with ID " + matchId + " not found!");
         }
 
         Match match = matchOpt.get();
         MatchScore matchScore = ongoingMatchesService.getMatchScore(matchId).orElse(null);
 
         if (matchScore == null) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Match score not found!");
-            logger.warning("Match score not found for ID: " + matchId);
-            return;
+            throw new MatchScoreNotFoundException("Match score not found for ID: " + matchId);
         }
 
         GamePlayer player = "player1".equals(playerNumberParameter) ? GamePlayer.PLAYER_ONE : GamePlayer.PLAYER_TWO;
@@ -149,6 +138,5 @@ public class MatchScoreServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/match-score?id=" + matchId);
         }
     }
-
 
 }
