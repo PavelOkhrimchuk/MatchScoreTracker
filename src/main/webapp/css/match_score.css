@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #4ca1af, #c4e0e5);
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.score-container {
+    background: #f7f9fc;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+.score-container h1 {
+    margin: 0 0 20px 0;
+    color: #222831;
+    font-family: 'Helvetica Neue', sans-serif;
+    letter-spacing: 1px;
+    font-size: 28px;
+}
+
+.score-board {
+    margin-bottom: 20px;
+}
+
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.score-table th, .score-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.score-table th {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.score-table td {
+    background-color: #f3f4f6;
+}
+
+.points, .games, .sets {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.ads, .tiebreak {
+    font-size: 14px;
+    color: #757575;
+}
+
+.score-update-form {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.score-update-form button {
+    padding: 12px 28px;
+    border: 2px solid #1e88e5;
+    border-radius: 10px;
+    background-color: #42a5f5;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Helvetica Neue', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.score-update-form button:hover {
+    background-color: #1976d2;
+    border-color: #0d47a1;
+}
+
+.hidden {
+    display: none;
+}

@@ -10,7 +10,7 @@ public class MatchScoreCalculationService {
 
 
 
-    public MatchScoreCalculationService(PointCalculationService pointCalculationService, GameManagementService gameManagementService) {
+    public MatchScoreCalculationService(PointCalculationService pointCalculationService) {
         this.pointCalculationService = pointCalculationService;
 
     }

@@ -132,14 +132,6 @@ public class MatchScore {
         return 0;
     }
 
-    public int getPlayerGames(GamePlayer player) {
-        if (player == GamePlayer.PLAYER_ONE) {
-            return player1Games;
-        } else if (player == GamePlayer.PLAYER_TWO) {
-            return player2Games;
-        }
-        return 0;
-    }
 
     public int getPlayerSets(GamePlayer player) {
         if (player == GamePlayer.PLAYER_ONE) {
@@ -187,12 +179,6 @@ public class MatchScore {
     public void clearAds() {
         player1Ads = 0;
         player2Ads = 0;
-    }
-
-    public String getMatchScore() {
-        return String.format("Player 1: %d sets, %d games, %d points\nPlayer 2: %d sets, %d games, %d points",
-                player1Sets, player1Games, player1Score,
-                player2Sets, player2Games, player2Score);
     }
 
     public boolean isMatchFinished() {

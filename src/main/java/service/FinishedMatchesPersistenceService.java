@@ -33,19 +33,6 @@ public class FinishedMatchesPersistenceService {
         }
     }
 
-    public Match getFinishedMatch(Integer matchId) {
-        logger.info("Retrieving match with ID: " + matchId);
-        try {
-            Optional<Match> matchOptional = matchRepository.findById(matchId);
-            Match match = matchOptional.orElse(null);
-            logger.info("Retrieved match with ID " + matchId + ": " + match);
-            return match;
-        } catch (Exception e) {
-            logger.severe("Error retrieving match with ID " + matchId + ": " + e.getMessage());
-            throw e;
-        }
-    }
-
     public Match createMatchFromScore(MatchScore matchScore) {
         logger.info("Creating match from score: " + matchScore);
         try {

@@ -1,16 +1,19 @@
-/* Sidebar container */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 200px;
+    width: 150px;
     height: 100%;
-    background-color: #333;
+    background: linear-gradient(to bottom, #666, #4ca1af);
     padding-top: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-/* Sidebar links */
+
 .sidebar .menu-link {
     display: block;
     color: white;
@@ -18,9 +21,11 @@
     padding: 10px;
     text-decoration: none;
     margin-bottom: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
-/* Change color on hover */
+
 .sidebar .menu-link:hover {
-    background-color: #575757;
+    background-color: #4b4b4b;
 }

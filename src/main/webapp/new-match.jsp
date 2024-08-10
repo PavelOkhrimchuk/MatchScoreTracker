@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Match</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menu.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/start.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>

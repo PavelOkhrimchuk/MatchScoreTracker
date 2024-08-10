@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.Objects;
 
 public class HibernateUtil {
 
@@ -37,7 +38,7 @@ public class HibernateUtil {
 
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
 
-                executeSqlScript("data.sql");
+                executeSqlScript();
 
             } catch (Exception e) {
                 releaseResources();
@@ -47,12 +48,12 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
-    private static void executeSqlScript(String scriptPath) {
+    private static void executeSqlScript() {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:h2:mem:test", "ohrim", "");
              Statement statement = connection.createStatement();
              BufferedReader reader = new BufferedReader(new InputStreamReader(
-                     HibernateUtil.class.getClassLoader().getResourceAsStream(scriptPath)))) {
+                     Objects.requireNonNull(HibernateUtil.class.getClassLoader().getResourceAsStream("data.sql"))))) {
 
             StringBuilder sql = new StringBuilder();
             String line;
