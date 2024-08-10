@@ -48,8 +48,7 @@ public class MatchScoreServlet extends HttpServlet {
 
         if (matchScoreCalculationService == null) {
             matchScoreCalculationService = new MatchScoreCalculationService(
-                    new PointCalculationService(new GameManagementService()),
-                    new GameManagementService()
+                    new PointCalculationService(new GameManagementService())
             );
             getServletContext().setAttribute("matchScoreCalculationService", matchScoreCalculationService);
             logger.info("MatchScoreCalculationService initialized.");
@@ -113,7 +112,6 @@ public class MatchScoreServlet extends HttpServlet {
             throw new MatchNotFoundException("Match with ID " + matchId + " not found!");
         }
 
-        Match match = matchOpt.get();
         MatchScore matchScore = ongoingMatchesService.getMatchScore(matchId).orElse(null);
 
         if (matchScore == null) {

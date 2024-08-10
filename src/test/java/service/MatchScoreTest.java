@@ -20,7 +20,7 @@ class MatchScoreTest {
         gameManagementService = new GameManagementService();
         pointCalculationService = new PointCalculationService(gameManagementService);
         matchScore = new MatchScore();
-        matchScoreCalculationService = new MatchScoreCalculationService(pointCalculationService, gameManagementService);
+        matchScoreCalculationService = new MatchScoreCalculationService(pointCalculationService);
     }
 
 

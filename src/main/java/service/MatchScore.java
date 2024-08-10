@@ -132,14 +132,6 @@ public class MatchScore {
         return 0;
     }
 
-    public int getPlayerGames(GamePlayer player) {
-        if (player == GamePlayer.PLAYER_ONE) {
-            return player1Games;
-        } else if (player == GamePlayer.PLAYER_TWO) {
-            return player2Games;
-        }
-        return 0;
-    }
 
     public int getPlayerSets(GamePlayer player) {
         if (player == GamePlayer.PLAYER_ONE) {

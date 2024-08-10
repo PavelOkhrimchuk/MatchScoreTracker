@@ -25,33 +25,20 @@ public class OngoingMatchesService {
 
     public Optional<Match> get(Integer id) {
         return Optional.ofNullable(ongoingMatches.get(id))
-                .map(MatchDetail::getMatch);
+                .map(MatchDetail::match);
     }
 
     public Optional<MatchScore> getMatchScore(Integer id) {
         return Optional.ofNullable(ongoingMatches.get(id))
-                .map(MatchDetail::getMatchScore);
+                .map(MatchDetail::matchScore);
     }
 
     public void remove(Integer id) {
         ongoingMatches.remove(id);
     }
 
-    private static class MatchDetail {
-        private final Match match;
-        private final MatchScore matchScore;
 
-        public MatchDetail(Match match, MatchScore matchScore) {
-            this.match = match;
-            this.matchScore = matchScore;
-        }
+    private record MatchDetail(Match match, MatchScore matchScore) {
 
-        public Match getMatch() {
-            return match;
-        }
-
-        public MatchScore getMatchScore() {
-            return matchScore;
-        }
     }
 }
