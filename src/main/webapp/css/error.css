@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #4ca1af, #c4e0e5);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.error-container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9); /* Прозрачный белый фон */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    margin: 20px;
+}
+
+.error-container h1 {
+    color: #d9534f;
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.error-container p {
+    font-size: 18px;
+    color: #555;
+    margin: 0 0 20px;
+}
+
+.error-container a {
+    color: #ffffff;
+    background-color: #4ca1af;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.error-container a:hover {
+    background-color: #357e86;
+}
