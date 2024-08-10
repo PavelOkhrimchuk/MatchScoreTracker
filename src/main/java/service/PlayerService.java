@@ -1,5 +1,6 @@
 package service;
 
+import exception.InvalidPlayerNameException;
 import model.Player;
 import repository.PlayerRepository;
 
@@ -24,5 +25,20 @@ public class PlayerService {
             return newPlayer;
         }
 
+    }
+
+    public void validatePlayerName(String playerName) throws InvalidPlayerNameException {
+        if (playerName == null || playerName.trim().isEmpty()) {
+            throw new InvalidPlayerNameException("Player name cannot be empty or contain only whitespace.");
+        }
+        if (playerName.length() < 2) {
+            throw new InvalidPlayerNameException("Player name must be at least 2 characters long.");
+        }
+        if (playerName.length() > 30) {
+            throw new InvalidPlayerNameException("Player name cannot be longer than 30 characters.");
+        }
+        if (!playerName.matches("[a-zA-Z0-9_\\- ]+")) {
+            throw new InvalidPlayerNameException("Player name contains invalid characters.");
+        }
     }
 }
