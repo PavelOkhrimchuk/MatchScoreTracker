@@ -62,7 +62,6 @@ public class PointCalculationService {
         return (player == GamePlayer.PLAYER_ONE) ? GamePlayer.PLAYER_TWO : GamePlayer.PLAYER_ONE;
     }
 
-    // Прочие вспомогательные методы для проверки условий
     private boolean playerPointsLessThan30(GamePlayer player, MatchScore matchScore) {
         return matchScore.getPlayerPoints(player) < 30;
     }

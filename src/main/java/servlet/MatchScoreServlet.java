@@ -77,8 +77,6 @@ public class MatchScoreServlet extends HttpServlet {
             return;
         }
 
-        logger.info("Received match ID: " + matchId);
-
         Optional<Match> matchOpt = ongoingMatchesService.get(matchId);
 
         if (matchOpt.isEmpty()) {
@@ -96,10 +94,9 @@ public class MatchScoreServlet extends HttpServlet {
             return;
         }
 
-        req.setAttribute("matchId", matchId); // Передача matchId в JSP
+        req.setAttribute("matchId", matchId);
         req.setAttribute("match", match);
         req.setAttribute("matchScore", matchScore);
-        logger.info("Forwarding to match-score.jsp with match ID: " + matchId);
 
         req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
     }
@@ -109,8 +106,6 @@ public class MatchScoreServlet extends HttpServlet {
         String idString = req.getParameter("id");
         String playerNumberParameter = req.getParameter("player");
 
-        logger.info("Received POST request with parameters - id: " + idString + ", player: " + playerNumberParameter);
-
         if (idString == null || idString.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Match ID is missing!");
             logger.warning("Match ID is missing in POST request.");
@@ -118,8 +113,6 @@ public class MatchScoreServlet extends HttpServlet {
         }
 
         Integer matchId = Integer.parseInt(idString);
-
-        logger.info("Parsed match ID: " + matchId);
 
         Optional<Match> matchOpt = ongoingMatchesService.get(matchId);
 
@@ -130,8 +123,6 @@ public class MatchScoreServlet extends HttpServlet {
         }
 
         Match match = matchOpt.get();
-        logger.info("Match found: " + match);
-
         MatchScore matchScore = ongoingMatchesService.getMatchScore(matchId).orElse(null);
 
         if (matchScore == null) {
@@ -140,34 +131,22 @@ public class MatchScoreServlet extends HttpServlet {
             return;
         }
 
-        logger.info("Match score found: " + matchScore);
-
         GamePlayer player = "player1".equals(playerNumberParameter) ? GamePlayer.PLAYER_ONE : GamePlayer.PLAYER_TWO;
-        logger.info("Player selected: " + player);
 
         boolean matchFinished = matchScoreCalculationService.playerWinsPoint(player, matchScore);
-        logger.info("Match finished: " + matchFinished);
 
-        try {
+        if (matchFinished) {
+            Match finishedMatch = finishedMatchesPersistenceService.createMatchFromScore(matchScore);
+            finishedMatchesPersistenceService.saveFinishedMatch(finishedMatch);
+            ongoingMatchesService.remove(matchId);
 
-            if (matchFinished) {
-                Match finishedMatch = finishedMatchesPersistenceService.createMatchFromScore(matchScore);
-                finishedMatchesPersistenceService.saveFinishedMatch(finishedMatch);
-                ongoingMatchesService.remove(matchId);
+            req.setAttribute("matchId", matchId);
+            req.setAttribute("match", finishedMatch);
+            req.setAttribute("matchScore", matchScore);
 
-                logger.info("Match finished, saving and removing. Winner: " + match.getWinner());
-
-                req.setAttribute("matchId", matchId);
-                req.setAttribute("match", finishedMatch);
-                req.setAttribute("matchScore", matchScore);
-                req.getRequestDispatcher("/final-score.jsp").forward(req, resp);
-            } else {
-                logger.info("Redirecting to match-score with ID: " + matchId);
-                resp.sendRedirect(req.getContextPath() + "/match-score?id=" + matchId);
-            }
-        } catch (Exception e) {
-            logger.severe("Error processing match: " + e.getMessage());
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing the match.");
+            req.getRequestDispatcher("/final-score.jsp").forward(req, resp);
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/match-score?id=" + matchId);
         }
     }
 

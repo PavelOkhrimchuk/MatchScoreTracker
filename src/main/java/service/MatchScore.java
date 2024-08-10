@@ -189,12 +189,6 @@ public class MatchScore {
         player2Ads = 0;
     }
 
-    public String getMatchScore() {
-        return String.format("Player 1: %d sets, %d games, %d points\nPlayer 2: %d sets, %d games, %d points",
-                player1Sets, player1Games, player1Score,
-                player2Sets, player2Games, player2Score);
-    }
-
     public boolean isMatchFinished() {
         int setsToWin = 2;
         return player1Sets >= setsToWin || player2Sets >= setsToWin;

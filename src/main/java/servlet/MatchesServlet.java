@@ -24,12 +24,10 @@ public class MatchesServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
 
-
         this.finishedMatchesPersistenceService = (FinishedMatchesPersistenceService) getServletContext().getAttribute("finishedMatchesPersistenceService");
 
         if (finishedMatchesPersistenceService == null) {
-
-            this.finishedMatchesPersistenceService = new FinishedMatchesPersistenceService(
+            finishedMatchesPersistenceService = new FinishedMatchesPersistenceService(
                     new MatchRepositoryImpl(),
                     new PlayerRepositoryImpl()
             );

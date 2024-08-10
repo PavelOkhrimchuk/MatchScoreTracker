@@ -23,16 +23,6 @@ public class Page <T> {
     }
 
 
-
-
-    public boolean hasNext() {
-        return pageNumber < totalPages - 1;
-    }
-
-    public boolean hasPrevious() {
-        return pageNumber > 0;
-    }
-
     @Override
     public String toString() {
         return "Page{" +
