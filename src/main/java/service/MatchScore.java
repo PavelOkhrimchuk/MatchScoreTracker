@@ -84,6 +84,15 @@ public class MatchScore {
         }
     }
 
+    public int getPlayerGames(GamePlayer player) {
+        if (player == GamePlayer.PLAYER_ONE) {
+            return player1Games;
+        } else if (player == GamePlayer.PLAYER_TWO) {
+            return player2Games;
+        }
+        return 0;
+    }
+
     public void increasePlayerSets(GamePlayer player) {
         if (player == GamePlayer.PLAYER_ONE) {
             player1Sets++;
