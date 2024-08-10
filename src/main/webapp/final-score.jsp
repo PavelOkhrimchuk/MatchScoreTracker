@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Score</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/final_score.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/final.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
