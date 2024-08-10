@@ -11,9 +11,10 @@ body {
     align-items: center;
     height: 100vh;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-.final-score-container {
+.score-container {
     background: #ffffff;
     padding: 40px;
     border-radius: 8px;
@@ -23,42 +24,102 @@ body {
     text-align: center;
 }
 
-.final-score-container h1 {
+.score-container h1 {
     margin: 0 0 20px 0;
     color: #333333;
 }
 
+/* Секция для таблицы статистики */
 .score-board {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     margin-bottom: 20px;
 }
 
-.player-score {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 45%;
+.score-table {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    gap: 1px;
+    background-color: #ddd;
 }
 
-.player-score h2 {
-    margin: 0 0 10px 0;
-    color: #333333;
+.table-header {
+    display: contents;
+    font-weight: bold;
+    background-color: #f4f4f4;
 }
 
-.player-score p {
-    margin: 5px 0;
-    font-size: 18px;
-    color: #555555;
+.header-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
 }
 
-.winner {
+.table-row {
+    display: contents;
+}
+
+.row-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.points-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.points {
     font-size: 24px;
     font-weight: bold;
-    margin: 20px 0;
-    color: #333333;
+}
+
+.ads {
+    font-size: 14px;
+    color: #888;
+}
+
+.games-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.games {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.tiebreak {
+    font-size: 14px;
+    color: #888;
+}
+
+.sets {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.score-update-form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.score-update-form button {
+    padding: 12px 24px;
+    border: 2px solid #357e86;
+    border-radius: 8px;
+    background-color: #4ca1af;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.score-update-form button:hover {
+    background-color: #357e86;
+    border-color: #255b61;
 }
 
 .hidden {

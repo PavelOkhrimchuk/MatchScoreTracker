@@ -15,82 +15,79 @@ body {
 }
 
 .score-container {
-    background: #ffffff;
+    background: #f7f9fc;
     padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 1000px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
     width: 100%;
     text-align: center;
 }
 
 .score-container h1 {
     margin: 0 0 20px 0;
-    color: #333333;
+    color: #222831;
+    font-family: 'Helvetica Neue', sans-serif;
+    letter-spacing: 1px;
+    font-size: 28px;
 }
 
 .score-board {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     margin-bottom: 20px;
 }
 
-.player-score {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 45%;
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.player-score h2 {
-    margin: 0 0 10px 0;
-    color: #333333;
+.score-table th, .score-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
 }
 
-.score-details p {
-    margin: 5px 0;
+.score-table th {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.score-table td {
+    background-color: #f3f4f6;
+}
+
+.points, .games, .sets {
     font-size: 18px;
-    color: #555555;
+    font-weight: bold;
+    color: #333;
+}
+
+.ads, .tiebreak {
+    font-size: 14px;
+    color: #757575;
 }
 
 .score-update-form {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .score-update-form button {
-    padding: 12px 24px;
-    border: 2px solid #357e86;
-    border-radius: 8px;
-    background-color: #4ca1af;
+    padding: 12px 28px;
+    border: 2px solid #1e88e5;
+    border-radius: 10px;
+    background-color: #42a5f5;
     color: #ffffff;
     font-size: 16px;
+    font-family: 'Helvetica Neue', sans-serif;
     cursor: pointer;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .score-update-form button:hover {
-    background-color: #357e86;
-    border-color: #255b61;
-}
-
-#final-score {
-    margin-top: 20px;
-}
-
-#final-score .score-board {
-    margin: 0 auto;
-}
-
-#final-score .player-score {
-    margin-bottom: 20px;
-}
-
-#final-score p {
-    margin: 5px 0;
+    background-color: #1976d2;
+    border-color: #0d47a1;
 }
 
 .hidden {

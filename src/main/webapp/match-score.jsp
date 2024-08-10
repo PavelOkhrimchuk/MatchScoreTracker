@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Score</title>
-    <link rel="stylesheet" href="css/match_score.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/match_score.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
@@ -14,28 +14,50 @@
 <div class="main-container">
     <div class="score-container">
         <h1>Match Score</h1>
+
+
         <div class="score-board">
-            <div class="player-score">
-                <h2 id="player1-name">${matchScore.player1Name}</h2>
-                <div class="score-details">
-                    <p>Points: <span id="player1-points">${matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE)}</span></p>
-                    <p>Games: <span id="player1-games">${matchScore.getPlayerGames(GamePlayer.PLAYER_ONE)}</span></p>
-                    <p>Sets: <span id="player1-sets">${matchScore.getPlayerSets(GamePlayer.PLAYER_ONE)}</span></p>
-                </div>
-            </div>
-            <div class="player-score">
-                <h2 id="player2-name">${matchScore.player2Name}</h2>
-                <div class="score-details">
-                    <p>Points: <span id="player2-points">${matchScore.getPlayerPoints(GamePlayer.PLAYER_TWO)}</span></p>
-                    <p>Games: <span id="player2-games">${matchScore.getPlayerGames(GamePlayer.PLAYER_TWO)}</span></p>
-                    <p>Sets: <span id="player2-sets">${matchScore.getPlayerSets(GamePlayer.PLAYER_TWO)}</span></p>
-                </div>
-            </div>
+            <table class="score-table">
+                <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Points</th>
+                    <th>Games</th>
+                    <th>Sets</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>${matchScore.player1Name}</td>
+                    <td class="points">
+                        <div>${matchScore.getPlayerPoints(GamePlayer.PLAYER_ONE)}</div>
+                        <div class="ads">${matchScore.getPlayerAds(GamePlayer.PLAYER_ONE)}</div>
+                    </td>
+                    <td class="games">
+                        <div>${matchScore.getPlayerGames(GamePlayer.PLAYER_ONE)}</div>
+                        <div class="tiebreak">${matchScore.getPlayerTieBreakPoints(GamePlayer.PLAYER_ONE)}</div>
+                    </td>
+                    <td class="sets">${matchScore.getPlayerSets(GamePlayer.PLAYER_ONE)}</td>
+                </tr>
+                <tr>
+                    <td>${matchScore.player2Name}</td>
+                    <td class="points">
+                        <div>${matchScore.getPlayerPoints(GamePlayer.PLAYER_TWO)}</div>
+                        <div class="ads">${matchScore.getPlayerAds(GamePlayer.PLAYER_TWO)}</div>
+                    </td>
+                    <td class="games">
+                        <div>${matchScore.getPlayerGames(GamePlayer.PLAYER_TWO)}</div>
+                        <div class="tiebreak">${matchScore.getPlayerTieBreakPoints(GamePlayer.PLAYER_TWO)}</div>
+                    </td>
+                    <td class="sets">${matchScore.getPlayerSets(GamePlayer.PLAYER_TWO)}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- Форма для обновления счета (если матч не завершён) -->
+
         <c:if test="${!matchScore.isMatchFinished()}">
-            <form action="match-score?id=${matchId}" method="post" class="score-update-form">
+            <form action="${pageContext.request.contextPath}/match-score?id=${matchId}" method="post" class="score-update-form">
                 <button type="submit" name="player" value="player1">Player 1 Won Point</button>
                 <button type="submit" name="player" value="player2">Player 2 Won Point</button>
             </form>
@@ -44,4 +66,3 @@
 </div>
 </body>
 </html>
-

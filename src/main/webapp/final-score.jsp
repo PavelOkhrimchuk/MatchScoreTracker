@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Score</title>
-    <link rel="stylesheet" href="css/finalscore.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/final_score.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
@@ -23,7 +23,10 @@
                 <p>Sets: ${matchScore.getPlayerSets(GamePlayer.PLAYER_TWO)}</p>
             </div>
         </div>
-        <p>Winner: ${match.getWinner() != null ? match.getWinner().getName() : "Unknown"}</p>
+        <div class="winner">
+            <p>Winner:</p>
+            <h2>${match.getWinner() != null ? match.getWinner().getName() : "Unknown"}</h2>
+        </div>
     </div>
 </div>
 </body>
