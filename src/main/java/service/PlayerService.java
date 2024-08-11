@@ -37,8 +37,6 @@ public class PlayerService {
         if (playerName.length() > 30) {
             throw new InvalidPlayerNameException("Player name cannot be longer than 30 characters.");
         }
-        if (!playerName.matches("[a-zA-Zа-яА-Я0-9_\\- ]+")) {
-            throw new InvalidPlayerNameException("Player name contains invalid characters.");
-        }
+
     }
 }
